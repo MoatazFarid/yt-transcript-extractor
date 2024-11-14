@@ -11,6 +11,8 @@ import whisper
 load_dotenv()
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
+# TODO: Implement audio chunking to decrease the number of tokens in each request
+
 def extract_captions(youtube_link):
     try:
         print(f"Processing YouTube link: {youtube_link}")  # Debugging statement
@@ -35,10 +37,7 @@ def extract_captions(youtube_link):
 
 def audio_to_text(audio_file):
     try:
-        # Load the whisper model
         model = whisper.load_model("base")  # You can choose a different model size if needed
-
-        # Transcribe the audio file
         result = model.transcribe(audio_file)
         return result['text']
     except Exception as e:
