@@ -28,9 +28,15 @@ This application extracts captions from YouTube videos. If captions are not avai
      ```
 6. Run the application:
    ```bash
-   python yt_transcript_extractor.py
+   python yt_transcript_extractor_ui.py
    ```
 
 ## Usage
 
 Enter the YouTube link when prompted to extract captions.
+
+## TODO and Future Work
+
+- Implement audio chunking to decrease the number of tokens in each request to the OpenAI API.
+- Create a Dockerfile for containerization of the application.
+- Update the script to run from the command line using a command-line arguments library to improve the CLI interface.
