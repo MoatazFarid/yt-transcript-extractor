@@ -27,3 +27,15 @@ wheels/
 
 # Environment variables
 .env
+
+# Whisper model
+*.pt
+*.onnx
+*.json
+
+# Audio files
+*.wav
+*.mp3
+*.m4a
+*.ogg
+

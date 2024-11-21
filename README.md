@@ -140,3 +140,12 @@ The analyzer generates two files in the `output` directory:
 | `chunk_size` | Text chunk size for processing | 1000 |
 | `save_output` | Save results to files | True |
 | `output_dir` | Directory for output files | "output" |
+
+### Export Transcript Only
+
+If you only need the transcript without summary analysis:
+
+1. Start the application
+2. Enter a YouTube URL
+3. Click "Export Transcript Only"
+4. The transcript will be saved as a text file in the `transcripts_YYYYMMDD` folder

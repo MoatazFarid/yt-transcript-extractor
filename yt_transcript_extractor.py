@@ -12,7 +12,6 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 # TODO: Implement audio chunking to decrease the number of tokens in each request
-
 def extract_captions(youtube_link):
     try:
         print(f"Processing YouTube link: {youtube_link}")  # Debugging statement
