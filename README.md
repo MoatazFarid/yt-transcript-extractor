@@ -1,151 +1,128 @@
-# yt-transcript-extractor
+# Transcript Generator
 
-This application extracts captions from YouTube videos. If captions are not available, it downloads the audio and converts it to text using OpenAI's Whisper model.
+A powerful application that generates transcripts from both YouTube videos and local video files. The application uses OpenAI's Whisper model for local video transcription and YouTube's API for online videos.
 
-<details>
-<summary>✨ Features</summary>
+## Features
 
-- Extracts available captions/subtitles from YouTube videos
-- Falls back to audio transcription using OpenAI Whisper if captions aren't available
-- Supports multiple languages (when available through YouTube)
-- Outputs transcripts in plain text format
-- Simple and intuitive user interface
-</details>
+- **YouTube Video Processing**
+  - Extract transcripts from YouTube videos
+  - Generate text summaries
+  - Export in Markdown format
+  - Support for multiple languages
 
-## 🚀 Setup Instructions
+- **Local Video Processing**
+  - Convert MP4 videos to transcripts
+  - Automatic MP4 to MP3 conversion
+  - Timestamped transcripts in Markdown format
+  - Organized output in timestamped directories
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Create a `.env` file:
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your OpenAI API key
-   ```
+## Prerequisites
 
-4. Run the setup script:
-   <details>
-   <summary>Setup Commands</summary>
+- Python 3.8 or higher
+- FFmpeg installed and added to system PATH
+- Windows/Linux/MacOS
 
-   ```bash
-   # For Bash
-   bash setup.sh
+## Installation
 
-   # For PowerShell
-   .\setup.ps1
-   ```
-   </details>
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/transcript_generator.git
+cd transcript_generator
+```
 
-5. Activate the virtual environment:
-   <details>
-   <summary>Activation Commands</summary>
+2. Create and activate a virtual environment:
+```bash
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
 
-   ```bash
-   # For Bash
-   source venv/bin/activate
+# Linux/MacOS
+python3 -m venv venv
+source venv/bin/activate
+```
 
-   # For PowerShell
-   .\venv\Scripts\Activate.ps1
-   ```
-   </details>
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-## 💻 Usage
+4. Install FFmpeg:
+   - **Windows**: 
+     1. Download from https://www.gyan.dev/ffmpeg/builds/
+     2. Extract and rename folder to 'ffmpeg'
+     3. Move to C:\ drive
+     4. Add C:\ffmpeg\bin to system PATH
+   - **Linux**: `sudo apt-get install ffmpeg`
+   - **MacOS**: `brew install ffmpeg`
+
+## Usage
 
 1. Start the application:
-   ```bash
-   python yt_transcript_extractor_ui.py
-   ```
-2. Enter a YouTube URL when prompted
-3. Wait for the transcript to be generated
-4. The output will be saved as a text file
-
-Example:
 ```bash
-# Extract captions from a YouTube video
-python yt_transcript_extractor_ui.py
-# When prompted, enter: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+python transcript_generator_ui.py
 ```
 
-## 🛠️ TODO and Future Work
+2. The application has two main features:
 
-- [ ] Implement audio chunking to decrease token usage
-- [ ] Create a Dockerfile for containerization
-- [ ] Add command-line arguments support
-- [ ] Add batch processing capabilities
+### YouTube Video Transcription
+1. Select the "YouTube Video" tab
+2. Paste the YouTube video URL
+3. Choose either:
+   - "Generate Transcript & Summary" for full processing
+   - "Export Transcript Only" for just the transcript
+4. Wait for processing to complete
+5. Find the output files in the generated timestamp directory
 
-## YouTube Content Analyzer
+### Local Video Transcription
+1. Select the "Local Video" tab
+2. Click "Browse Video File" to select an MP4 file
+3. Click "Generate Transcript"
+4. Wait for processing to complete
+5. Find the transcript in the generated timestamp directory
 
-The `youtube_content_analyzer.py` script analyzes YouTube video transcripts and generates Simon Sinek style content analysis.
+## Output Format
 
-### Features
+### YouTube Videos
+- `video_id_transcript.md`: Full transcript
+- `video_id_summary.md`: Text summary
+- Files are organized in a directory with the video ID
 
-- 📝 Extracts and processes YouTube video transcripts
-- 🔍 Analyzes content using OpenAI's GPT models
-- 💡 Generates detailed content analysis in Simon Sinek's style
-- 💾 Saves both raw transcripts and analyzed content
+### Local Videos
+- `filename_transcript.md`: Transcript with timestamps
+- Organized in directories named `filename_YYYYMMDD_HHMMSS`
+- Timestamps for each segment of speech
 
-### Prerequisites
+## Troubleshooting
 
-1. OpenAI API key (set in `.env` file)
-2. Python packages:
-   ```bash
-   pip install youtube_transcript_api python-dotenv
-   ```
+1. **FFmpeg Error**:
+   - Ensure FFmpeg is properly installed
+   - Verify system PATH includes FFmpeg
+   - Restart application after installation
 
-### Usage
+2. **Memory Issues**:
+   - Close other applications
+   - For large videos, ensure sufficient free memory
+   - Consider using a machine with more RAM
 
-#### Method 1: Using Environment Variables
+3. **File Access Errors**:
+   - Run the application with appropriate permissions
+   - Ensure write access to the output directory
 
-```bash
-# Set your OpenAI API key and video ID in .env file
-OPENAI_API_KEY=your_api_key_here
-YOUTUBE_VIDEO_ID=video_id_here
+## Contributing
 
-# Run the script
-python youtube_content_analyzer.py
-```
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-#### Method 2: Direct Input
+## License
 
-```python
-from youtube_content_analyzer import YouTubeContentAnalyzer
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-# Initialize analyzer
-analyzer = YouTubeContentAnalyzer(api_key="your_openai_api_key")
+## Acknowledgments
 
-# Analyze video
-analysis = analyzer.analyze_video(
-    video_id="video_id_here",
-    chunk_size=1000,  # Optional: adjust text chunk size
-    save_output=True  # Optional: save results to files
-)
-
-# Access results
-print(f"Transcript: {analysis.transcript}")
-print(f"Analysis points: {analysis.points}")
-print(f"Output files: {analysis.raw_output_path}, {analysis.summary_path}")
-```
-
-### Output Files
-
-The analyzer generates two files in the `output` directory:
-- `{video_id}_transcript.txt`: Raw video transcript
-- `{video_id}_analysis.md`: Detailed content analysis in markdown format
-
-### Configuration Options
-
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `api_key` | OpenAI API key | Required |
-| `model` | OpenAI model to use | "gpt-4" |
-| `chunk_size` | Text chunk size for processing | 1000 |
-| `save_output` | Save results to files | True |
-| `output_dir` | Directory for output files | "output" |
-
-### Export Transcript Only
-
-If you only need the transcript without summary analysis:
-
-1. Start the application
-2. Enter a YouTube URL
-3. Click "Export Transcript Only"
-4. The transcript will be saved as a text file in the `transcripts_YYYYMMDD` folder
+- OpenAI's Whisper model for transcription
+- YouTube API for video processing
+- MoviePy for video conversion
+- All other open-source contributors
